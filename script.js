@@ -40,7 +40,15 @@ const GameBoard = (function () {
 
   const logBoard = () => console.table(boardPositions);
 
-  return { placeMoveOnBoard, checkGameState, logBoard };
+  const printBoard = () => {
+    let tempBoard = [];
+    for (let i = 0; i < boardPositions.length; i += 3) {
+      tempBoard.push(boardPositions.slice(i, i + 3));
+    }
+    console.table(tempBoard);
+  };
+
+  return { placeMoveOnBoard, checkGameState, logBoard, printBoard };
 })();
 
 const createPlayer = function (playerID) {
@@ -52,7 +60,9 @@ const createPlayer = function (playerID) {
 const Game = (function () {
   const player1 = createPlayer("X");
   const player2 = createPlayer("O");
-  GameBoard.logBoard();
+  GameBoard.printBoard();
+  GameBoard.placeMoveOnBoard(player2, 8);
+  GameBoard.printBoard();
   GameBoard.checkGameState(player1.getPlayerID(), player2.getPlayerID());
 
   // while (GameBoard.checkGameState() == 0) {
