@@ -17,3 +17,8 @@ const createPlayer = function (playerID) {
   const getPlayerID = () => id;
   return { getPlayerID };
 };
+
+const Game = (function () {
+  const player1 = createPlayer("X");
+  const player2 = createPlayer("O");
+})();
