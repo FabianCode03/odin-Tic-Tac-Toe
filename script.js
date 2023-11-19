@@ -86,16 +86,16 @@ const Game = (function () {
   const player2 = createPlayer("O")
   let currentPlayer = Math.random() < 0.5 ? player1 : player2
 
-  while (
-    GameBoard.checkGameState(player1.getPlayerID(), player2.getPlayerID()) == 0
-  ) {
-    let result
-    do {
-      let playerChoice = prompt("Enter position to place your marker (0 - 8)")
-      result = GameBoard.placeMoveOnBoard(currentPlayer, playerChoice)
-    } while (result === 1)
+  // while (
+  //   GameBoard.checkGameState(player1.getPlayerID(), player2.getPlayerID()) == 0
+  // ) {
+  //   let result
+  //   do {
+  //     let playerChoice = prompt("Enter position to place your marker (0 - 8)")
+  //     result = GameBoard.placeMoveOnBoard(currentPlayer, playerChoice)
+  //   } while (result === 1)
 
-    GameBoard.printBoard()
-    currentPlayer = currentPlayer == player1 ? player2 : player1
-  }
+  //   GameBoard.printBoard()
+  //   currentPlayer = currentPlayer == player1 ? player2 : player1
+  // }
 })()
