@@ -10,3 +10,21 @@
   --color-background-1: #e1e2ef;
   --color-background-2: #bfacaa;
 }
+
+body {
+  background-color: var(--color-background-1);
+  font-family: "Abril Fatface", serif;
+}
+
+header {
+  display: flex;
+  min-height: 150px;
+  background: var(--color-primary);
+  justify-content: center;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 4rem;
+  font-weight: normal;
+}
