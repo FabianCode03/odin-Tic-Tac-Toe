@@ -43,3 +43,15 @@ main {
   margin: calc((100vh - var(--header-height) - var(--display-height)) / 2);
   background-color: var(--color-background-2);
 }
+
+.game-grid {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.game-cell {
+  border: 3px solid var(--color-secondary);
+}
