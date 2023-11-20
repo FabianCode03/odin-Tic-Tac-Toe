@@ -73,8 +73,43 @@ main {
   font-size: 4rem;
   background-color: var(--color-primary);
   border: none;
+  border-radius: 1rem;
+  padding: 1rem;
 }
 
 .modal::backdrop {
   background-color: rgba(5, 29, 71, 0.5);
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-around;
+  flex-basis: 100%;
+  margin-top: 1rem;
+  gap: 1rem;
+  outline: none;
+}
+
+.button-row > * {
+  width: 50%;
+  font-size: x-large;
+  font-family: inherit;
+  border-radius: 1rem;
+  outline: none;
+}
+
+.close-btn {
+  background-color: #d9534f;
+}
+
+.play-again-btn {
+  background: #5cb85c;
+}
+
+.close-btn:hover {
+  background-color: #c9302c;
+}
+
+.play-again-btn:hover {
+  background: #4cae4c;
 }
