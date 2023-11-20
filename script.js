@@ -93,37 +93,37 @@ const Game = (function () {
   const playMove = e => {
     const playerChoice = e.target.id
 
-    GameBoard.placeMoveOnBoard(currentPlayer, playerChoice)
+    if (GameBoard.placeMoveOnBoard(currentPlayer, playerChoice) == 0) {
+      const state = GameBoard.checkGameState(
+        player1.getPlayerID(),
+        player2.getPlayerID()
+      )
 
-    const state = GameBoard.checkGameState(
-      player1.getPlayerID(),
-      player2.getPlayerID()
-    )
+      switch (state) {
+        case 0:
+          currentPlayer = currentPlayer == player1 ? player2 : player1
+          break
 
-    switch (state) {
-      case 0:
-        GameBoard.printBoard()
-        DisplayController.render()
-        currentPlayer = currentPlayer == player1 ? player2 : player1
-        break
+        case 1:
+          DisplayController.render()
+          //handle player 1 won
+          break
 
-      case 1:
-        DisplayController.render()
-        //handle player 1 won
-        break
+        case 2:
+          DisplayController.render()
+          //handle player 2 won
+          break
 
-      case 2:
-        DisplayController.render()
-        //handle player 2 won
-        break
+        case -1:
+          DisplayController.render()
+          //handle draw
+          break
 
-      case -1:
-        DisplayController.render()
-        //handle draw
-        break
-
-      default:
-        break
+        default:
+          break
+      }
+      GameBoard.printBoard()
+      DisplayController.render()
     }
   }
   return { playMove }
