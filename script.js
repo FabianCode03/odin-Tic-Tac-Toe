@@ -23,17 +23,10 @@ const GameBoard = (function () {
     return true
   }
 
-  const positionIsValid = position => {
-    if (position < 0 || position > 8) {
-      console.log("kein valides Feld (0-8)")
-
-      return false
-    }
-    return true
-  }
+  const gameIsRunning = () => running
 
   const placeMoveOnBoard = (player, position) => {
-    if (positionIsValid(position) && positionIsEmpty(position)) {
+    if (gameIsRunning() && positionIsEmpty(position)) {
       boardPositions[position] = player.getPlayerID()
       return 0
     }
@@ -50,14 +43,17 @@ const GameBoard = (function () {
   const checkGameState = (playerID1, playerID2) => {
     if (threeInARow(playerID1)) {
       console.log(`Gewonnen: ${playerID1}`)
+      running = false
       return 1
     }
     if (threeInARow(playerID2)) {
       console.log(`Gewonnen: ${playerID2}`)
+      running = false
       return 2
     }
     if (boardIsFull()) {
       console.log("Unentschieden")
+      running = false
       return -1
     }
     console.log("Spiel geht weiter")
@@ -89,9 +85,58 @@ const createPlayer = function (playerID) {
   return { getPlayerID }
 }
 
+const Game = (function () {
+  const player1 = createPlayer("X")
+  const player2 = createPlayer("O")
+  let currentPlayer = Math.random() < 0.5 ? player1 : player2
+
+  const playMove = e => {
+    const playerChoice = e.target.id
+
+    GameBoard.placeMoveOnBoard(currentPlayer, playerChoice)
+
+    const state = GameBoard.checkGameState(
+      player1.getPlayerID(),
+      player2.getPlayerID()
+    )
+
+    switch (state) {
+      case 0:
+        GameBoard.printBoard()
+        DisplayController.render()
+        currentPlayer = currentPlayer == player1 ? player2 : player1
+        break
+
+      case 1:
+        DisplayController.render()
+        //handle player 1 won
+        break
+
+      case 2:
+        DisplayController.render()
+        //handle player 2 won
+        break
+
+      case -1:
+        DisplayController.render()
+        //handle draw
+        break
+
+      default:
+        break
+    }
+  }
+  return { playMove }
+})()
+
 const DisplayController = (function () {
   const gameCells = Array.from(document.querySelectorAll(".game-cell"))
   const positions = GameBoard.getBoardPositions()
+
+  gameCells.forEach(cell =>
+    cell.addEventListener("click", e => Game.playMove(e))
+  )
+
   console.log(positions)
   console.log(gameCells)
 
@@ -101,25 +146,4 @@ const DisplayController = (function () {
     })
   }
   return { render }
-})()
-
-const Game = (function () {
-  const player1 = createPlayer("X")
-  const player2 = createPlayer("O")
-  let currentPlayer = Math.random() < 0.5 ? player1 : player2
-  DisplayController.render()
-
-  // while (
-  //   GameBoard.checkGameState(player1.getPlayerID(), player2.getPlayerID()) == 0
-  // ) {
-  //   let result
-  //   do {
-  //     let playerChoice = prompt("Enter position to place your marker (0 - 8)")
-  //     result = GameBoard.placeMoveOnBoard(currentPlayer, playerChoice)
-  //   } while (result === 1)
-
-  //   GameBoard.printBoard()
-  //   DisplayController.render()
-  //   currentPlayer = currentPlayer == player1 ? player2 : player1
-  // }
 })()
