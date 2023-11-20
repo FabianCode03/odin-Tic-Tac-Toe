@@ -89,6 +89,7 @@ const DisplayController = (function () {
   const gameCells = Array.from(document.querySelectorAll(".game-cell"))
   const positions = GameBoard.getBoardPositions()
   const modal = document.querySelector(".modal")
+  const closeBtn = document.querySelector(".close-btn")
 
   gameCells.forEach(cell =>
     cell.addEventListener("click", e => Game.playMove(e))
@@ -105,6 +106,9 @@ const DisplayController = (function () {
     message.textContent = resultString
     modal.showModal()
   }
+
+  closeBtn.addEventListener("click", () => modal.close())
+
   return { render, setEndOfGameMessage }
 })()
 
