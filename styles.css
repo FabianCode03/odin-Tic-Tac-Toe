@@ -9,6 +9,8 @@
   --color-secondary: #05204a;
   --color-background-1: #e1e2ef;
   --color-background-2: #bfacaa;
+  --header-height: 150px;
+  --display-height: 600px;
 }
 
 body {
@@ -18,7 +20,7 @@ body {
 
 header {
   display: flex;
-  min-height: 150px;
+  height: var(--header-height);
   background: var(--color-primary);
   justify-content: center;
   align-items: center;
@@ -27,4 +29,17 @@ header {
 header h1 {
   font-size: 4rem;
   font-weight: normal;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.display {
+  aspect-ratio: 1/1;
+  width: var(--display-height);
+  margin: calc((100vh - var(--header-height) - var(--display-height)) / 2);
+  background-color: var(--color-background-2);
 }
