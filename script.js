@@ -105,17 +105,14 @@ const Game = (function () {
           break
 
         case 1:
-          DisplayController.render()
           //handle player 1 won
           break
 
         case 2:
-          DisplayController.render()
           //handle player 2 won
           break
 
         case -1:
-          DisplayController.render()
           //handle draw
           break
 
