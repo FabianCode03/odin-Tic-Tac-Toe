@@ -12,6 +12,8 @@ const GameBoard = (function () {
     [2, 4, 6], // Diagonale von rechts oben nach links unten
   ]
 
+  const getBoardPositions = () => boardPositions
+
   const positionIsEmpty = position => {
     if (boardPositions[position] !== null) {
       console.log("position schon belegt")
@@ -72,7 +74,13 @@ const GameBoard = (function () {
     console.table(tempBoard)
   }
 
-  return { placeMoveOnBoard, checkGameState, logBoard, printBoard }
+  return {
+    getBoardPositions,
+    placeMoveOnBoard,
+    checkGameState,
+    logBoard,
+    printBoard,
+  }
 })()
 
 const createPlayer = function (playerID) {
@@ -81,10 +89,25 @@ const createPlayer = function (playerID) {
   return { getPlayerID }
 }
 
+const DisplayController = (function () {
+  const gameCells = Array.from(document.querySelectorAll(".game-cell"))
+  const positions = GameBoard.getBoardPositions()
+  console.log(positions)
+  console.log(gameCells)
+
+  const render = () => {
+    gameCells.forEach((cell, index) => {
+      cell.textContent = positions[index]
+    })
+  }
+  return { render }
+})()
+
 const Game = (function () {
   const player1 = createPlayer("X")
   const player2 = createPlayer("O")
   let currentPlayer = Math.random() < 0.5 ? player1 : player2
+  DisplayController.render()
 
   // while (
   //   GameBoard.checkGameState(player1.getPlayerID(), player2.getPlayerID()) == 0
@@ -96,6 +119,7 @@ const Game = (function () {
   //   } while (result === 1)
 
   //   GameBoard.printBoard()
+  //   DisplayController.render()
   //   currentPlayer = currentPlayer == player1 ? player2 : player1
   // }
 })()

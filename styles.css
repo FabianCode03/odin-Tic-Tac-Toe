@@ -53,6 +53,11 @@ main {
 }
 
 .game-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: calc((var(--display-height) / 3) * 0.5);
+  color: var(--color-secondary);
   border: 3px solid var(--color-secondary);
 }
 
