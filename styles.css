@@ -5,8 +5,8 @@
 
 :root {
   --color-text: #02020a;
-  --color-primary: #b497d6;
-  --color-secondary: #05204a;
+  --color-primary: #b799d6;
+  --color-secondary: rgb(5, 29, 71);
   --color-background-1: #e1e2ef;
   --color-background-2: #bfacaa;
   --header-height: 150px;
@@ -70,4 +70,11 @@ main {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  font-size: 4rem;
+  background-color: var(--color-primary);
+  border: none;
+}
+
+.modal::backdrop {
+  background-color: rgba(5, 29, 71, 0.5);
 }
