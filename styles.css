@@ -55,3 +55,7 @@ main {
 .game-cell {
   border: 3px solid var(--color-secondary);
 }
+
+.game-cell:hover {
+  background-color: var(--color-primary);
+}
