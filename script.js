@@ -85,9 +85,32 @@ const createPlayer = function (playerID) {
   return { getPlayerID }
 }
 
+const DisplayController = (function () {
+  const gameCells = Array.from(document.querySelectorAll(".game-cell"))
+  const positions = GameBoard.getBoardPositions()
+  const modal = document.querySelector(".modal")
+
+  gameCells.forEach(cell =>
+    cell.addEventListener("click", e => Game.playMove(e))
+  )
+
+  const render = () => {
+    gameCells.forEach((cell, index) => {
+      cell.textContent = positions[index]
+    })
+  }
+
+  const setEndOfGameMessage = resultString => {
+    const message = document.querySelector(".end-of-game-message")
+    message.textContent = resultString
+    modal.showModal()
+  }
+  return { render, setEndOfGameMessage }
+})()
+
 const Game = (function () {
-  const player1 = createPlayer("X")
-  const player2 = createPlayer("O")
+  const player1 = createPlayer("❤️")
+  const player2 = createPlayer("😇")
   let currentPlayer = Math.random() < 0.5 ? player1 : player2
 
   const playMove = e => {
@@ -105,15 +128,19 @@ const Game = (function () {
           break
 
         case 1:
-          //handle player 1 won
+          DisplayController.setEndOfGameMessage(
+            `${player1.getPlayerID()} won, great job!`
+          )
           break
 
         case 2:
-          //handle player 2 won
+          DisplayController.setEndOfGameMessage(
+            `${player2.getPlayerID()} won great job!`
+          )
           break
 
         case -1:
-          //handle draw
+          DisplayController.setEndOfGameMessage("Draw, you both are losers!")
           break
 
         default:
@@ -124,23 +151,4 @@ const Game = (function () {
     }
   }
   return { playMove }
-})()
-
-const DisplayController = (function () {
-  const gameCells = Array.from(document.querySelectorAll(".game-cell"))
-  const positions = GameBoard.getBoardPositions()
-
-  gameCells.forEach(cell =>
-    cell.addEventListener("click", e => Game.playMove(e))
-  )
-
-  console.log(positions)
-  console.log(gameCells)
-
-  const render = () => {
-    gameCells.forEach((cell, index) => {
-      cell.textContent = positions[index]
-    })
-  }
-  return { render }
 })()
