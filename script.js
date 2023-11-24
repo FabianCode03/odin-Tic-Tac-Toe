@@ -25,13 +25,18 @@ const GameBoard = (function () {
 
   const gameIsRunning = () => running
 
+  const setGameIsRunning = running => !running
+
   const placeMoveOnBoard = (player, position) => {
     if (gameIsRunning() && positionIsEmpty(position)) {
-      boardPositions[position] = player.getPlayerID()
+      boardPositions[position] = player.getPlayerID() //remove later
       return 0
     }
     return 1
   }
+
+  const clearBoard = () =>
+    boardPositions.forEach((_, index) => (boardPositions[index] = null))
 
   const boardIsFull = () => boardPositions.every(position => position !== null)
 
@@ -76,6 +81,8 @@ const GameBoard = (function () {
     checkGameState,
     logBoard,
     printBoard,
+    setGameIsRunning,
+    clearBoard,
   }
 })()
 
@@ -90,6 +97,7 @@ const DisplayController = (function () {
   const positions = GameBoard.getBoardPositions()
   const modal = document.querySelector(".modal")
   const closeBtn = document.querySelector(".close-btn")
+  const restartBtn = document.querySelector(".play-again-btn")
 
   gameCells.forEach(cell =>
     cell.addEventListener("click", e => Game.playMove(e))
@@ -109,12 +117,19 @@ const DisplayController = (function () {
 
   closeBtn.addEventListener("click", () => modal.close())
 
+  restartBtn.addEventListener("click", () => {
+    modal.close()
+    GameBoard.setGameIsRunning()
+    GameBoard.clearBoard()
+    DisplayController.render()
+  })
+
   return { render, setEndOfGameMessage }
 })()
 
 const Game = (function () {
   const player1 = createPlayer("❤️")
-  const player2 = createPlayer("😇")
+  const player2 = createPlayer("🌻")
   let currentPlayer = Math.random() < 0.5 ? player1 : player2
 
   const playMove = e => {
